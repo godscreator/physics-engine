@@ -20,8 +20,8 @@ class body:
         self.anim()
         
     def anim(self):
-        self.v     +=  self.a*1  # v = u + at
-        ds             =  self.v*1  # ds = vdt
+        self.v     +=  self.a*0.001  # v = u + at
+        ds             =  self.v*0.001  # ds = vdt
         self.pos +=  ds           # s = s + ds
         self.p1   +=  ds          # s = s + ds
         self.p2   +=  ds          # s = s + ds
@@ -50,7 +50,7 @@ class collider:
         by= fabs((b.p1.y - b.p2.y)/2.0)
         
         if self.cols != (a.uid,b.uid) and (r.length <= ax+bx) :
-            print "collision :",a.color,b.color
+            #print "collision:",a.color,b.color
             v1 = a.onCollision(b , e)
             v2 = b.onCollision(a , e)
             a.v+=v1
@@ -69,11 +69,21 @@ coll = None
 def  setup(Canvas):
     global bodies , coll
     coll = collider()
-    bodies.append( body( shape = "oval" , color = "green" , mass = 2.0  , dimension = [100,100,110,110] , pos = Vector2(105,105) , canvas = Canvas ))
-    bodies.append( body( shape = "oval" , color = "blue" , mass = 2.0  , dimension = [150,100,160,110] , pos = Vector2(155,105) , canvas = Canvas ))
-    bodies.append( body( shape = "rect" , color = "yellow" , mass = 2.0  , dimension = [170,170,180,180] , pos = Vector2(175,175) , canvas = Canvas ))
-    bodies[0].v = Vector2(1,0)
-    bodies[2].v = Vector2(0,-1)   
+    bodies.append( body( shape = "oval" , color = "green" , mass = 2.0  , dimension = [200,200,210,210] , pos = Vector2(205,205) , canvas = Canvas ))
+    bodies.append( body( shape = "oval" , color = "blue" , mass = 2.0  , dimension = [170,300,180,310] , pos = Vector2(255,105) , canvas = Canvas ))
+    for i in range(10):
+        bodies.append( body( shape = "rect" , color = "yellow" , mass = 100000.0  , dimension = [170+i*10 + 2,170,180+i*10,180] , pos = Vector2(175+i*5,175) , canvas = Canvas ))
+    for i in range(1,10):
+        bodies.append( body( shape = "rect" , color = "yellow" , mass = 100000.0  , dimension = [170+i*10 + 2,280,180+i*10,290] , pos = Vector2(175+i*5,285) , canvas = Canvas ))
+    for i in range(1,10):
+        bodies.append( body( shape = "rect" , color = "yellow" , mass = 100000.0  , dimension = [170,170+i*10 + 2,180,180+i*10] , pos = Vector2(175,175+i*5) , canvas = Canvas ))
+    for i in range(9):
+        bodies.append( body( shape = "rect" , color = "yellow" , mass = 100000.0  , dimension = [260,260-i*10 + 2,270,270-i*10] , pos = Vector2(265,265-i*5) , canvas = Canvas ))
+    bodies[0].v = Vector2(1000,-3000)
+    bodies[0].a = Vector2(0,10000)
+    bodies[1].v = Vector2(1000,0)
+    bodies[1].a = Vector2(5000,0)
+
 def  draw(Canvas):
     global coll
     coll.anim(bodies)
