@@ -26,15 +26,15 @@ class shape:
 
 cols = (0,0)
 def collision(a,b,e = 1):
-##    p = (a.p1 + a.p2)/2.0
-##    o = fabs((a.p1.x - a.p2.x)/2.0)
-##    n = fabs((a.p1.y - a.p2.y)/2.0)
-##    l = (b.p1 + b.p2)/2.0
-##    k = fabs((b.p1.x - b.p2.x)/2.0)
-##    m= fabs((b.p1.y - b.p2.y)/2.0)
-##   ( p-l).length <= o+k    
+    #(((a.p1.x <= b.p1.x and b.p1.x <= a.p2.x)or (a.p1.x <= b.p2.x and b.p2.x <= a.p2.x))and ((a.p1.y <= b.p1.y and b.p1.y <= a.p2.y) or (a.p1.y <= b.p2.y and b.p2.y <= a.p2.y)) or ((b.p1.x <= a.p1.x and a.p1.x <= b.p2.x)or (b.p1.x <= a.p2.x and a.p2.x <= b.p2.x))and ((b.p1.y <= a.p1.y and a.p1.y <= b.p2.y) or (b.p1.y <= a.p2.y and a.p2.y <= b.p2.y)))
+    p = (a.p1 + a.p2)/2.0
+    o = fabs((a.p1.x - a.p2.x)/2.0)
+    n = fabs((a.p1.y - a.p2.y)/2.0)
+    l = (b.p1 + b.p2)/2.0
+    k = fabs((b.p1.x - b.p2.x)/2.0)
+    m= fabs((b.p1.y - b.p2.y)/2.0)
     global cols
-    if cols != (a.uid,b.uid) and (((a.p1.x <= b.p1.x and b.p1.x <= a.p2.x)or (a.p1.x <= b.p2.x and b.p2.x <= a.p2.x))and ((a.p1.y <= b.p1.y and b.p1.y <= a.p2.y) or (a.p1.y <= b.p2.y and b.p2.y <= a.p2.y)) or ((b.p1.x <= a.p1.x and a.p1.x <= b.p2.x)or (b.p1.x <= a.p2.x and a.p2.x <= b.p2.x))and ((b.p1.y <= a.p1.y and a.p1.y <= b.p2.y) or (b.p1.y <= a.p2.y and a.p2.y <= b.p2.y))):
+    if cols != (a.uid,b.uid) and ( p-l).length <= o+k  :
         print "collision :",a.color,b.color
         v1=a.body.onCollision(b.body,e)
         v2=b.body.onCollision(a.body,e)
@@ -86,9 +86,10 @@ class box:
 bodies = []
 def  setup(canvas):
     global bodies
-    bodies.append(ball(canvas,200,200,10,2.0,0.0,-1000.0,"green"))
-    bodies.append(ball(canvas,150,200,10,2.0,0,-1000.0,"blue"))
-    bodies.append(box(canvas,100,100,200,5,1000000.0,0,0,"red"))
+    bodies.append(ball(canvas,200,200,10,2.0,-1000.0,0.0,"green"))
+    bodies.append(ball(canvas,150,200,10,2.0,0,0.0,"blue"))
+    bodies.append(ball(canvas,300,200,10,2.0,-2000.0,0.0,"yellow"))
+##    bodies.append(box(canvas,100,100,200,5,1000000.0,0,0,"red"))
 ##    bodies.append(box(canvas,100,300,200,5,1000000.0,0,0,"red"))
 ##    bodies.append(box(canvas,100,100,5,200,1000000.0,0,0,"red"))
 ##    bodies.append(box(canvas,300,100,5,205,1000000.0,0,0,"red"))
