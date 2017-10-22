@@ -20,28 +20,20 @@ class body:
         self.anim()
         
     def anim(self):
-        self.v     +=  self.a*0.0000000001  # v = u + at
-        ds             =  self.v*0.0000000001  # ds = vdt
+        self.v     +=  self.a*0.00000001  # v = u + at
+        ds             =  self.v*0.00000001  # ds = vdt
         self.pos +=  ds           # s = s + ds
         self.p1   +=  ds          # s = s + ds
         self.p2   +=  ds          # s = s + ds
         self.shapes[ self.shape ]( self.p1.x  ,  self.p1.y  ,  self.p2.x  ,  self.p2.y  ,  fill = self.color  )
        
-    def  onCollision(self,other,e =1):
-        m1 , m2  = self.m , other.m
-        r    = (self.pos-other.pos).normalise()
-        v1 = self.v.dot(r)
-        v2 = other.v.dot(r)
-        v   = (  (1+e) * (v2 - v1)) / (m1/m2+1)
-        return fabs(v)*r
-
 class collider:
     def __init__( self ,canvas):
         self.cols = (0 , 0) # denotes just previous collision
         self.canvas = canvas
     def collision(self , a , b , e = 1):# a,b : body , e = elastic coefficient.
         self.canvas.create_rectangle(a.p1.x-1,a.p1.y-1,a.p2.x+1,a.p2.y+1,outline = "red")
-        self.canvas.create_rectangle(b.p1.x-1,b.p1.y-1,b.p2.x+1,b.p2.y+1,outline = "green")
+        self.canvas.create_rectangle(b.p1.x-1,b.p1.y-1,b.p2.x+1,b.p2.y+1,outline = "red")
         def inBtw(a,b,c,error = 1):#equivalent to a <= b <= c
             return (a >=b-error and a <=b+error)  or (c >=b-error and c <=b+error)
         v = False   
@@ -53,11 +45,13 @@ class collider:
             v  = True
         if inBtw(a.p1.x,b.p1.x,a.p2.x) and inBtw(a.p1.y,b.p2.y,a.p2.y):
             v  = True
-        
         if self.cols != (a.uid,b.uid) and v :
             print "collision:",a.color,b.color
-            v1 = a.onCollision(b , e)
-            v2 = b.onCollision(a , e)
+            m1 , m2  = a.m , b.m
+            r    = (b.pos-a.pos).normalise()
+            u1 ,  u2   = a.v.dot(r) , b.v.dot(r)
+            v1   = (((1+e) * (u2 - u1)) / (m1/m2+1)) * r # change in velocity
+            v2   = (((1+e) * (u1 - u2)) / (m2/m1+1)) * r # change in velocity
             a.v+=v1
             b.v+=v2
             self.cols = (a.uid,b.uid)
