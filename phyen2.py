@@ -34,17 +34,7 @@ class collider:
     def collision(self , a , b , e = 1):# a,b : body , e = elastic coefficient.
         self.canvas.create_rectangle(a.p1.x-1,a.p1.y-1,a.p2.x+1,a.p2.y+1,outline = "red")
         self.canvas.create_rectangle(b.p1.x-1,b.p1.y-1,b.p2.x+1,b.p2.y+1,outline = "red")
-        def inBtw(a,b,c,error = 1):#equivalent to a <= b <= c
-            return (a >=b-error and a <=b+error)  or (c >=b-error and c <=b+error)
-        v = False   
-        if inBtw(a.p1.x,b.p1.x,a.p2.x) and inBtw(a.p1.y,b.p2.y,a.p2.y):
-            v  = True
-        if inBtw(a.p1.x,b.p1.x,a.p2.x) and inBtw(a.p1.y,b.p1.y,a.p2.y):
-            v  = True
-        if inBtw(a.p1.x,b.p2.x,a.p2.x) and inBtw(a.p1.y,b.p2.y,a.p2.y):
-            v  = True
-        if inBtw(a.p1.x,b.p1.x,a.p2.x) and inBtw(a.p1.y,b.p2.y,a.p2.y):
-            v  = True
+        
         if self.cols != (a.uid,b.uid) and v :
             print "collision:",a.color,b.color
             m1 , m2  = a.m , b.m
@@ -84,8 +74,7 @@ def  setup(Canvas):
     bodies[1].a = Vector2(5000,0)
 
 def  draw(Canvas):
-    global coll
-   
+    global coll  
     for i in bodies:
         i.anim()
     coll.anim(bodies)
