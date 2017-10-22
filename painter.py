@@ -5,14 +5,13 @@ class process:
         self.width = width
         self.setup = setup
         self.draw = draw
-        self.fps = 50
-        self.execute()
+        self.root = Tk()
+        self.fps = 1000
     def  calldraw(self):
         self.canvas.delete(ALL)
         self.draw(self.canvas)
         self.canvas.after(1000/self.fps,self.calldraw)
     def execute(self):
-        self.root = Tk()
         self.canvas = Canvas(self.root , width = self.width ,height= self.height )
         self.canvas.pack()
         self.setup(self.canvas)

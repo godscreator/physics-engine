@@ -16,27 +16,35 @@ class body:
         a,b,c,d               =  dimension
         self.p1 , self.p2 = Vector2(a,b) , Vector2(c,d)
         self.shapes       = { "oval" : canvas.create_oval , "rect" : canvas.create_rectangle }
-        self.uid             =  self.shapes[ self.shape ]( self.p1.x  ,  self.p1.y  ,  self.p2.x  ,  self.p2.y  ,  fill = self.color  )
+        self.uid             =  self.shapes[ self.shape ]( self.p1.x  ,  self.p1.y  ,  self.p2.x  ,  self.p2.y  ,  fill = self.color  ,outline = "")
         self.anim()
         
     def anim(self):
-        self.v     +=  self.a*0.00000001  # v = u + at
-        ds             =  self.v*0.00000001  # ds = vdt
+        self.v     +=  self.a*1  # v = u + at
+        ds             =  self.v*1  # ds = vdt
         self.pos +=  ds           # s = s + ds
         self.p1   +=  ds          # s = s + ds
         self.p2   +=  ds          # s = s + ds
-        self.shapes[ self.shape ]( self.p1.x  ,  self.p1.y  ,  self.p2.x  ,  self.p2.y  ,  fill = self.color  )
+        self.shapes[ self.shape ]( self.p1.x  ,  self.p1.y  ,  self.p2.x  ,  self.p2.y  ,  fill = self.color  ,outline = "" )
        
 class collider:
     def __init__( self ,canvas):
         self.cols = (0 , 0) # denotes just previous collision
         self.canvas = canvas
     def collision(self , a , b , e = 1):# a,b : body , e = elastic coefficient.
-        self.canvas.create_rectangle(a.p1.x-1,a.p1.y-1,a.p2.x+1,a.p2.y+1,outline = "red")
-        self.canvas.create_rectangle(b.p1.x-1,b.p1.y-1,b.p2.x+1,b.p2.y+1,outline = "red")
+##        self.canvas.create_rectangle(a.p1.x-1,a.p1.y-1,a.p2.x+1,a.p2.y+1,outline = "red")
+##        self.canvas.create_rectangle(b.p1.x-1,b.p1.y-1,b.p2.x+1,b.p2.y+1,outline = "red")
+        p = (a.p1 + a.p2)/2.0
+        q = (b.p1 + b.p2)/2.0
+        r  = p - q
         
-        if self.cols != (a.uid,b.uid) and v :
-            print "collision:",a.color,b.color
+        ax = fabs((a.p1.x - a.p2.x)/2.0)
+        ay = fabs((a.p1.y - a.p2.y)/2.0)
+        bx = fabs((b.p1.x - b.p2.x)/2.0)
+        by= fabs((b.p1.y - b.p2.y)/2.0)
+        
+        if  (r.length <= ax+bx) :
+##            print "collision:",a.color,b.color
             m1 , m2  = a.m , b.m
             r    = (b.pos-a.pos).normalise()
             u1 ,  u2   = a.v.dot(r) , b.v.dot(r)
@@ -44,7 +52,6 @@ class collider:
             v2   = (((1+e) * (u1 - u2)) / (m2/m1+1)) * r # change in velocity
             a.v+=v1
             b.v+=v2
-            self.cols = (a.uid,b.uid)
             
     def anim(self , bds):#bds:bodies
         for i in range(len(bds)):
@@ -58,26 +65,36 @@ coll = None
 def  setup(Canvas):
     global bodies , coll
     coll = collider(Canvas)
-    bodies.append( body( shape = "oval" , color = "red" , mass = 2.0  , dimension = [200,200,210,210] , pos = Vector2(205,205) , canvas = Canvas ))
-    bodies.append( body( shape = "oval" , color = "blue" , mass = 2.0  , dimension = [170,300,180,310] , pos = Vector2(255,105) , canvas = Canvas ))
-    for i in range(10):
-        bodies.append( body( shape = "rect" , color = "yellow" , mass = 100000.0  , dimension = [170+i*10 + 2,170,180+i*10,180] , pos = Vector2(175+i*5,175) , canvas = Canvas ))
-    for i in range(1,10):
-        bodies.append( body( shape = "rect" , color = "yellow" , mass = 100000.0  , dimension = [170+i*10 + 2,280,180+i*10,290] , pos = Vector2(175+i*5,285) , canvas = Canvas ))
-    for i in range(1,10):
-        bodies.append( body( shape = "rect" , color = "yellow" , mass = 100000.0  , dimension = [170,170+i*10 + 2,180,180+i*10] , pos = Vector2(175,175+i*5) , canvas = Canvas ))
-    for i in range(9):
-        bodies.append( body( shape = "rect" , color = "yellow" , mass = 100000.0  , dimension = [260,260-i*10 + 2,270,270-i*10] , pos = Vector2(265,265-i*5) , canvas = Canvas ))
-    bodies[0].v = Vector2(1000000000,-100000)
-    bodies[0].a = Vector2(0,10000)
-    bodies[1].v = Vector2(1000,0)
-    bodies[1].a = Vector2(5000,0)
+    bodies.append( body( shape = "oval" , color = "violet" , mass = 2.0  , dimension = [200,200,270,270] , pos = Vector2(235,235) , canvas = Canvas ))
+    bodies.append( body( shape = "oval" , color = "blue" , mass = 2.0  , dimension = [300,300,360,360] , pos = Vector2(330,330) , canvas = Canvas ))
+    bodies.append( body( shape = "oval" , color = "skyblue" , mass = 2.0  , dimension = [400,400,450,450] , pos = Vector2(425,425) , canvas = Canvas ))
+    bodies.append( body( shape = "oval" , color = "green" , mass = 2.0  , dimension = [500,500,540,540] , pos = Vector2(520,520) , canvas = Canvas ))
+    bodies.append( body( shape = "oval" , color = "yellow" , mass = 2.0  , dimension = [300,500,330,530] , pos = Vector2(315,515) , canvas = Canvas ))
+    bodies.append( body( shape = "oval" , color = "orange" , mass = 2.0  , dimension = [300,400,320,420] , pos = Vector2(310,410) , canvas = Canvas ))
+    bodies.append( body( shape = "oval" , color = "red" , mass = 2.0  , dimension = [100,500,110,510] , pos = Vector2(105,505) , canvas = Canvas ))
+    bodies[0].v = Vector2(10,10)
+ 
 
 def  draw(Canvas):
     global coll  
     for i in bodies:
         i.anim()
+        if (i.p1.x<=0 ) :
+            if i.v.x <0:
+                i.v.x *= -1
+        if (i.p2.x >= 600 ):
+            if i.v.x >0:
+                i.v.x *= -1
+        if (i.p1.y<=0 ) :
+            if i.v.y <0:
+                i.v.y *= -1
+        if (i.p2.y >= 600 ):
+            if i.v.y >0:
+                i.v.y *= -1
     coll.anim(bodies)
     
 
-p = process(setup,draw,1500,1500)
+p = process(setup,draw,600,600)
+p.root.title("bounce")
+p.fps = 100
+p.execute()
