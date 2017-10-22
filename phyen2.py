@@ -65,13 +65,13 @@ coll = None
 def  setup(Canvas):
     global bodies , coll
     coll = collider(Canvas)
-    bodies.append( body( shape = "oval" , color = "violet" , mass = 7.0  , dimension = [200,200,270,270] , pos = Vector2(235,235) , canvas = Canvas ))
-    bodies.append( body( shape = "oval" , color = "blue" , mass = 6.0  , dimension = [300,300,360,360] , pos = Vector2(330,330) , canvas = Canvas ))
-    bodies.append( body( shape = "oval" , color = "skyblue" , mass = 5.0  , dimension = [400,400,450,450] , pos = Vector2(425,425) , canvas = Canvas ))
-    bodies.append( body( shape = "oval" , color = "green" , mass = 4.0  , dimension = [500,500,540,540] , pos = Vector2(520,520) , canvas = Canvas ))
-    bodies.append( body( shape = "oval" , color = "yellow" , mass = 3.0  , dimension = [300,500,330,530] , pos = Vector2(315,515) , canvas = Canvas ))
-    bodies.append( body( shape = "oval" , color = "orange" , mass = 2.0  , dimension = [300,400,320,420] , pos = Vector2(310,410) , canvas = Canvas ))
-    bodies.append( body( shape = "oval" , color = "red" , mass = 1.0  , dimension = [100,500,110,510] , pos = Vector2(105,505) , canvas = Canvas ))
+    bodies.append( body( shape = "rect" , color = "violet" , mass = 7.0  , dimension = [200,200,270,270] , pos = Vector2(235,235) , canvas = Canvas ))
+    bodies.append( body( shape = "rect" , color = "blue" , mass = 6.0  , dimension = [300,300,360,360] , pos = Vector2(330,330) , canvas = Canvas ))
+    bodies.append( body( shape = "rect" , color = "skyblue" , mass = 5.0  , dimension = [400,400,450,450] , pos = Vector2(425,425) , canvas = Canvas ))
+    bodies.append( body( shape = "rect" , color = "green" , mass = 4.0  , dimension = [500,500,540,540] , pos = Vector2(520,520) , canvas = Canvas ))
+    bodies.append( body( shape = "rect" , color = "yellow" , mass = 3.0  , dimension = [300,500,330,530] , pos = Vector2(315,515) , canvas = Canvas ))
+    bodies.append( body( shape = "rect" , color = "orange" , mass = 2.0  , dimension = [300,400,320,420] , pos = Vector2(310,410) , canvas = Canvas ))
+    bodies.append( body( shape = "rect" , color = "red" , mass = 1.0  , dimension = [100,500,110,510] , pos = Vector2(105,505) , canvas = Canvas ))
     bodies[0].v = Vector2(1,5)
  
 
